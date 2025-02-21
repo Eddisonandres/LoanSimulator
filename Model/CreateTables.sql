@@ -27,16 +27,6 @@ CREATE OR REPLACE TRIGGER AFTER_TABLE_CREATE
             VALUES (v_table_name, 0);
         end if;
 END;
-select * from TAB_ID;
-/* -- Procedure to insert name of table which requiere a numeric id
-create or replace procedure INSERT_TAB_ID(
-    table_name_in IN TAB_ID.TABLE_NAME%type
-) IS
-BEGIN
-    insert into INSERT_STATUS (TABLE_NAME) values (table_name_in);
-    commit;
-END;
- */
 
 -- countries: stores country information, referencing STATUS_TAB for the country's status.
 CREATE table COUNTRIES (
@@ -72,14 +62,26 @@ CREATE table CITIES (
 );
 
 -- customers: stores customer information, referencing customer status from STATUS_TAB.
-CREATE table CUSTOMERS (
+CREATE TABLE CUSTOMERS (
     CUSTOMER_ID NUMBER NOT NULL,  -- Unique identifier for each customer
     CUSTOMER_FIRSTNAME VARCHAR2(100) NOT NULL,  -- Customer's first name
     CUSTOMER_LASTNAME VARCHAR2(100) NOT NULL,  -- Customer's last name
-    DATE_CREATED DATE NOT NULL,  -- Date the customer was created
-    CUSTOMER_STATUS CHAR(2) NOT NULL,  -- The customer's status, linked to STATUS_TAB
-    CONSTRAINT PK_CUSTOMERS PRIMARY KEY (CUSTOMER_ID),  -- Primary key for the customers table
-    FOREIGN KEY (CUSTOMER_STATUS) REFERENCES STATUS_TAB(STATUS_ID)  -- Foreign key referencing the status from STATUS_TAB
+    DATE_OF_BIRTH DATE,  -- Customer's date of birth
+    BIRTH_CITY_ID NUMBER,  -- City of birth, references CITIES table
+    RESIDENCE_CITY_ID NUMBER,  -- Current residence city, references CITIES table
+    EMAIL VARCHAR2(150),  -- Customer's email address
+    PHONE_NUMBER VARCHAR2(20),  -- Customer's phone number
+    ADDRESS VARCHAR2(250),  -- Customer's home address
+    OCCUPATION VARCHAR2(100),  -- Customer's profession or occupation
+    INCOME NUMBER(12,2),  -- Customer's monthly income
+    MARITAL_STATUS VARCHAR2(20),  -- Customer's marital status (e.g., Single, Married)
+    GENDER CHAR(1),  -- Customer's gender (M = Male, F = Female, O = Other)
+    DATE_CREATED DATE NOT NULL,  -- Date the customer record was created
+    CUSTOMER_STATUS CHAR(2) NOT NULL,  -- Status of the customer, references STATUS_TAB
+    CONSTRAINT PK_CUSTOMERS PRIMARY KEY (CUSTOMER_ID),  -- Primary key for the table
+    FOREIGN KEY (CUSTOMER_STATUS) REFERENCES STATUS_TAB(STATUS_ID),  -- Links status to STATUS_TAB
+    FOREIGN KEY (BIRTH_CITY_ID) REFERENCES CITIES(CITY_ID),  -- Links birth city to CITIES table
+    FOREIGN KEY (RESIDENCE_CITY_ID) REFERENCES CITIES(CITY_ID)  -- Links residence city to CITIES table
 );
 
 -- products: stores product information, referencing product status from STATUS_TAB.
