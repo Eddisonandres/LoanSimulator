@@ -1,5 +1,11 @@
--- status_tab: status used in different tables
--- This table stores various status options for entities (countries, provinces, cities, etc.)
+-- tab_id: stores table names and their corresponding unique IDs.
+CREATE table TAB_ID (
+    TABLE_NAME VARCHAR2(30)  NOT NULL,  -- Name of the table
+    NUMBER_ID NUMBER default 0 NOT NULL,  -- Unique identifier for the table
+    CONSTRAINT UN_TAB_ID UNIQUE (TABLE_NAME)  -- Unique constraint on table name
+);
+
+-- status_tab: stores various status options for entities (countries, provinces, cities, etc.)
 CREATE table STATUS_TAB (
     STATUS_ID CHAR(2) NOT NULL, -- Unique identifier for each status
     STATUS_TYPE VARCHAR2(10) NOT NULL, -- The type of status (e.g., country, province, customer)
@@ -7,9 +13,34 @@ CREATE table STATUS_TAB (
     CONSTRAINT PK_STATUS_TAB PRIMARY KEY (STATUS_ID) -- Primary key consisting only of STATUS_ID
 );
 
+CREATE OR REPLACE TRIGGER AFTER_TABLE_CREATE
+    AFTER CREATE ON SCHEMA
+    DECLARE
+        v_table_name VARCHAR2(100);
+    BEGIN
+        IF ora_dict_obj_type = 'TABLE' THEN
+            -- Get the table name from the DDL event
+            v_table_name := ora_dict_obj_name;
+
+            -- Insert the table name into the TAB_ID table
+            INSERT INTO TAB_ID (TABLE_NAME, NUMBER_ID) 
+            VALUES (v_table_name, 0);
+        end if;
+END;
+select * from TAB_ID;
+/* -- Procedure to insert name of table which requiere a numeric id
+create or replace procedure INSERT_TAB_ID(
+    table_name_in IN TAB_ID.TABLE_NAME%type
+) IS
+BEGIN
+    insert into INSERT_STATUS (TABLE_NAME) values (table_name_in);
+    commit;
+END;
+ */
+
 -- countries: stores country information, referencing STATUS_TAB for the country's status.
 CREATE table COUNTRIES (
-    COUNTRY_ID VARCHAR2(3) NOT NULL,  -- Unique identifier for each country
+    COUNTRY_ID NUMBER NOT NULL,  -- Unique identifier for each country
     COUNTRY_NAME VARCHAR2(100) NOT NULL,  -- Name of the country
     COUNTRY_STATUS CHAR(2) NOT NULL,  -- The country's status, linked to STATUS_TAB
     CONSTRAINT PK_COUNTRIES PRIMARY KEY (COUNTRY_ID),  -- Primary key for the countries table
@@ -18,22 +49,23 @@ CREATE table COUNTRIES (
 
 -- provinces: stores province information, linking with countries and province status.
 CREATE table PROVINCES (
-    PROVINCE_ID VARCHAR2(3) NOT NULL,  -- Unique identifier for each province
+    PROVINCE_ID NUMBER NOT NULL,  -- Unique identifier for each province
     PROVINCE_NAME VARCHAR2(100),  -- Name of the province
-    COUNTRY_ID VARCHAR2(3) NOT NULL,  -- Foreign key referencing the country
+    COUNTRY_ID NUMBER NOT NULL,  -- Foreign key referencing the country
     PROVINCE_STATUS CHAR(2) NOT NULL,  -- The province's status, linked to STATUS_TAB
     CONSTRAINT PK_PROVINCES PRIMARY KEY (PROVINCE_ID),  -- Primary key for the provinces table
     FOREIGN KEY (COUNTRY_ID) REFERENCES COUNTRIES(COUNTRY_ID),  -- Foreign key referencing the country
     FOREIGN KEY (PROVINCE_STATUS) REFERENCES STATUS_TAB(STATUS_ID)  -- Foreign key referencing the status from STATUS_TAB
 );
 
+
 -- cities: stores city information, linking with provinces and countries.
 CREATE table CITIES (
     CITY_ID NUMBER NOT NULL,  -- Unique identifier for each city
     CITY_NAME VARCHAR2(100) NOT NULL,  -- Name of the city
-    COUNTRY_ID VARCHAR2(3) NOT NULL,  -- Foreign key referencing the country
-    PROVINCE_ID VARCHAR2(3) NOT NULL,  -- Foreign key referencing the province
-    CITY_STATE CHAR(2) NOT NULL,  -- The city's status, linked to STATUS_TAB
+    COUNTRY_ID NUMBER NOT NULL,  -- Foreign key referencing the country
+    PROVINCE_ID NUMBER NOT NULL,  -- Foreign key referencing the province
+    CITY_STATUS CHAR(2) NOT NULL,  -- The city's status, linked to STATUS_TAB
     CONSTRAINT PK_CITIES PRIMARY KEY (CITY_ID),  -- Primary key for the cities table
     FOREIGN KEY (COUNTRY_ID) REFERENCES COUNTRIES(COUNTRY_ID),  -- Foreign key referencing the country
     FOREIGN KEY (PROVINCE_ID) REFERENCES PROVINCES(PROVINCE_ID)  -- Foreign key referencing the province
@@ -149,11 +181,4 @@ CREATE table PAYMENT_DETAILS (
     FOREIGN KEY (PAYMENT_ID) REFERENCES PAYMENTS(PAYMENT_ID),  -- Foreign key referencing the payment
     CONSTRAINT FK_PAYMENT_DETAILS FOREIGN KEY (LOAN_ID, NUMBER_INSTALLMENT)  -- Composite foreign key referencing the amortization schedule
         REFERENCES AMORTIZATION_SCHEDULE(LOAN_ID, NUMBER_INSTALLMENT)
-);
-
--- tab_id: stores table names and their corresponding unique IDs.
-CREATE table TAB_ID (
-    TABLE_NAME VARCHAR2(30)  NOT NULL,  -- Name of the table
-    NUMBER_ID NUMBER default 0 NOT NULL,  -- Unique identifier for the table
-    CONSTRAINT UN_TAB_ID UNIQUE (TABLE_NAME)  -- Unique constraint on table name
 );
