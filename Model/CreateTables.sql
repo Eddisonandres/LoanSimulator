@@ -34,6 +34,7 @@ CREATE table COUNTRIES (
     COUNTRY_NAME VARCHAR2(100) NOT NULL,  -- Name of the country
     COUNTRY_STATUS CHAR(2) NOT NULL,  -- The country's status, linked to STATUS_TAB
     CONSTRAINT PK_COUNTRIES PRIMARY KEY (COUNTRY_ID),  -- Primary key for the countries table
+    CONSTRAINT UNIQUE_COUNTRY UNIQUE (COUNTRY_NAME),
     FOREIGN KEY (COUNTRY_STATUS) REFERENCES STATUS_TAB(STATUS_ID)  -- Foreign key referencing STATUS_TAB
 );
 
@@ -44,6 +45,7 @@ CREATE table PROVINCES (
     COUNTRY_ID NUMBER NOT NULL,  -- Foreign key referencing the country
     PROVINCE_STATUS CHAR(2) NOT NULL,  -- The province's status, linked to STATUS_TAB
     CONSTRAINT PK_PROVINCES PRIMARY KEY (PROVINCE_ID),  -- Primary key for the provinces table
+    CONSTRAINT UNIQUE_PROVINCE UNIQUE (PROVINCE_NAME),
     FOREIGN KEY (COUNTRY_ID) REFERENCES COUNTRIES(COUNTRY_ID),  -- Foreign key referencing the country
     FOREIGN KEY (PROVINCE_STATUS) REFERENCES STATUS_TAB(STATUS_ID)  -- Foreign key referencing the status from STATUS_TAB
 );
@@ -57,6 +59,7 @@ CREATE table CITIES (
     PROVINCE_ID NUMBER NOT NULL,  -- Foreign key referencing the province
     CITY_STATUS CHAR(2) NOT NULL,  -- The city's status, linked to STATUS_TAB
     CONSTRAINT PK_CITIES PRIMARY KEY (CITY_ID),  -- Primary key for the cities table
+    CONSTRAINT UNIQUE_CITY UNIQUE (CITY_NAME),
     FOREIGN KEY (COUNTRY_ID) REFERENCES COUNTRIES(COUNTRY_ID),  -- Foreign key referencing the country
     FOREIGN KEY (PROVINCE_ID) REFERENCES PROVINCES(PROVINCE_ID)  -- Foreign key referencing the province
 );
