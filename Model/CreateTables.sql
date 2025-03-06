@@ -8,8 +8,8 @@ CREATE table TAB_ID (
 -- status_tab: stores various status options for entities (countries, provinces, cities, etc.)
 CREATE table STATUS_TAB (
     STATUS_ID CHAR(2) NOT NULL, -- Unique identifier for each status
-    STATUS_TYPE VARCHAR2(10) NOT NULL, -- The type of status (e.g., country, province, customer)
-    STATUS_NAME VARCHAR2(20) NOT NULL, -- Descriptive name for the status
+    STATUS_TYPE VARCHAR2(50) NOT NULL, -- The type of status (e.g., country, province, customer)
+    STATUS_NAME VARCHAR2(50) NOT NULL, -- Descriptive name for the status
     CONSTRAINT PK_STATUS_TAB PRIMARY KEY (STATUS_ID) -- Primary key consisting only of STATUS_ID
 );
 
@@ -55,12 +55,10 @@ CREATE table PROVINCES (
 CREATE table CITIES (
     CITY_ID NUMBER NOT NULL,  -- Unique identifier for each city
     CITY_NAME VARCHAR2(100) NOT NULL,  -- Name of the city
-    COUNTRY_ID NUMBER NOT NULL,  -- Foreign key referencing the country
     PROVINCE_ID NUMBER NOT NULL,  -- Foreign key referencing the province
     CITY_STATUS CHAR(2) NOT NULL,  -- The city's status, linked to STATUS_TAB
     CONSTRAINT PK_CITIES PRIMARY KEY (CITY_ID),  -- Primary key for the cities table
     CONSTRAINT UNIQUE_CITY UNIQUE (CITY_NAME),
-    FOREIGN KEY (COUNTRY_ID) REFERENCES COUNTRIES(COUNTRY_ID),  -- Foreign key referencing the country
     FOREIGN KEY (PROVINCE_ID) REFERENCES PROVINCES(PROVINCE_ID)  -- Foreign key referencing the province
 );
 
