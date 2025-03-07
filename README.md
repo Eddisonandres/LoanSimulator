@@ -19,7 +19,7 @@ The system manages information related to loans requested by customers, their st
 
 The relational database model is designed to ensure all tables are properly related through foreign keys, ensuring data integrity.
 
-![Relational Model](./model/Relational_Model.png)
+![Relational Model](Relational_Model.png)
 
 > The image of the relational model shows the created tables and their relationships.
 
