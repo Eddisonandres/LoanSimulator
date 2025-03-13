@@ -23,10 +23,32 @@ The relational database model is designed to ensure all tables are properly rela
 
 > The image of the relational model shows the created tables and their relationships.
 
-## Files
+## Folder Structure
 
-- **CreateTables.sql**: Contains SQL scripts to create the tables and their relationships in the database, as well as the trigger to log created tables in the `TAB_ID` table.
-- **Relational Model**: Image of the relational model that describes the tables and their relationships.
+- **model/**: Contains the `createTables.sql` script, which defines the database schema.
+- **procedures/**: Stores individual SQL scripts for inserting and updating data using stored procedures.
+
+## Scripts
+
+### **model/**
+- `createTables.sql`: Script to create all necessary tables in the database.
+
+### **procedures/**
+- `insert_city.sql`: Procedure to insert cities.
+- `insert_country.sql`: Procedure to insert countries.
+- `insert_customer.sql`: Procedure to insert customers.
+- `insert_payment_frequency.sql`: Procedure to insert payment frequencies.
+- `insert_product.sql`: Procedure to insert products.
+- `insert_product_interest_rate.sql`: Procedure to insert product interest rates.
+- `insert_province.sql`: Procedure to insert provinces.
+- `insert_status.sql`: Procedure to insert status values.
+- `insert_term_months.sql`: Procedure to insert loan term months.
+- `update_tab_ID.sql`: Procedure to update table identifiers.
+
+## Usage
+
+Run the scripts in the given order to set up the database and populate it with data. Ensure you have the necessary permissions before execution.
+
 
 ## Instructions
 
