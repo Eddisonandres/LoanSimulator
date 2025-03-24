@@ -45,6 +45,8 @@ The relational database model is designed to ensure all tables are properly rela
 - `insert_status.sql`: Procedure to insert status values.
 - `insert_term_months.sql`: Procedure to insert loan term months.
 - `update_tab_ID.sql`: Procedure to update table identifiers.
+- `crate_amortization_schedule_temp.sql: Procedure to create the amortization schedule.
+- `insert_loan_application.sql: Procedure to insert the loan application
 
 ### **functions/**
 - `fc_id_table.sql`: Function to retrieve the unique ID of a table from `tab_id`.
