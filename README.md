@@ -27,6 +27,7 @@ The relational database model is designed to ensure all tables are properly rela
 
 - **model/**: Contains the `createTables.sql` script, which defines the database schema.
 - **procedures/**: Stores individual SQL scripts for inserting and updating data using stored procedures.
+- **functions/**: Contains SQL functions used for retrieving specific data from the database.
 
 ## Scripts
 
@@ -44,6 +45,12 @@ The relational database model is designed to ensure all tables are properly rela
 - `insert_status.sql`: Procedure to insert status values.
 - `insert_term_months.sql`: Procedure to insert loan term months.
 - `update_tab_ID.sql`: Procedure to update table identifiers.
+
+### **functions/**
+- `fc_id_table.sql`: Function to retrieve the unique ID of a table from `tab_id`.
+- `fc_rate_value.sql`: Function to get the interest rate value by `rate_id` from `product_interest_rates`.
+- `fc_term_months_value.sql`: Function to retrieve the term length in months by `term_id` from `term_months`.
+- `fc_payment_frequency_value.sql`: Function to extract the payment frequency in months by `frequency_id` from `payment_frequencies`.
 
 ## Usage
 
