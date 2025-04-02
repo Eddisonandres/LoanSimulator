@@ -124,7 +124,7 @@ CREATE TABLE PRODUCT_INTEREST_RATES (
     RATE_ID NUMBER NOT NULL,  -- Unique identifier for the interest rate
     PRODUCT_ID NUMBER(2) NOT NULL,  -- Foreign key referencing the product
     TERM_ID NUMBER NOT NULL,  -- Foreign key referencing the loan term in months
-    INTEREST_RATE NUMBER(5,2) NOT NULL,  -- Interest rate percentage (e.g., 7.50 for 7.5%)
+    INTEREST_RATE NUMBER(5,4) NOT NULL,  -- Interest rate percentage (e.g., 7.50 for 7.5%)
     DATE_EFFECTIVE DATE NOT NULL,  -- The date when the interest rate becomes effective
     INTERES_RATE_STATUS CHAR(2) DEFAULT 'GA' NOT NULL, -- The payment frequency's status, linked to STATUS_TAB
     CONSTRAINT PK_PRODUCT_INTEREST_RATES PRIMARY KEY (RATE_ID),  -- Primary key constraint
@@ -200,21 +200,15 @@ CREATE table AMORTIZATION_SCHEDULE (
 
 -- amortization_schedule: stores the amortization details for approved loans.
 CREATE table AMORTIZATION_SCHEDULE_TEMP (
-    LOAN_ID NUMBER NOT NULL,  -- Foreign key referencing the approved loan
+    APPLICATION_ID NUMBER NOT NULL,  -- Foreign key referencing the approved loan
     NUMBER_INSTALLMENT NUMBER(3) NOT NULL,  -- The installment number
     TOTAL_INSTALLMENT NUMBER(10,2) NOT NULL,  -- Total installment amount
     PRINCIPAL NUMBER(10,2) NOT NULL,  -- Principal portion of the installment
     INTEREST NUMBER(10,2) NOT NULL,  -- Interest portion of the installment
     REMAINING_BALANCE NUMBER(10,2) NOT NULL,  -- Remaining loan balance
     INSTALLMENT_DATE DATE NOT NULL,  -- Date the installment is due
-    PRINCIPAL_PAYMENT NUMBER(10,2) DEFAULT 0 NOT NULL,  -- Principal payment for this installment
-    INTEREST_PAYMENT NUMBER(10,2) DEFAULT 0 NOT NULL,  -- Interest payment for this installment
-    PENALTY_FEE NUMBER(10,2) DEFAULT 0 NOT NULL,  -- Any penalty fees for late payment
-    TOTAL_PAYMENT NUMBER(10,2) DEFAULT 0 NOT NULL,  -- Total payment for this installment (including penalties)
-    PAYMENT_STATUS CHAR(2) DEFAULT 'SP' NOT NULL,  -- Status of the payment, linked to STATUS_TAB
-    CONSTRAINT PK_AMORTIZATION_SCHEDULE_TEMP PRIMARY KEY (LOAN_ID, NUMBER_INSTALLMENT),  -- Composite primary key for loan ID and installment number
-    FOREIGN KEY (LOAN_ID) REFERENCES LOAN_APPLICATION(APPLICATION_ID),  -- Foreign key referencing the approved loan
-    FOREIGN KEY (PAYMENT_STATUS) REFERENCES STATUS_TAB(STATUS_ID)
+    CONSTRAINT PK_AMORTIZATION_SCHEDULE_TEMP PRIMARY KEY (APPLICATION_ID, NUMBER_INSTALLMENT),  -- Composite primary key for loan ID and installment number
+    FOREIGN KEY (APPLICATION_ID) REFERENCES LOAN_APPLICATION(APPLICATION_ID)  -- Foreign key referencing the approved loan
 );
 
 -- payments: stores information about payments made for approved loans.

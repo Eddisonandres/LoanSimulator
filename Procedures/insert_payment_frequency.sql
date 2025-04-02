@@ -1,14 +1,17 @@
 -- >> Procedure to insert a payment frequency << --
 CREATE OR REPLACE PROCEDURE INSERT_PAYMENT_FREQUENCY (
+    -- parameters
+    p_frequency IN PAYMENT_FREQUENCIES.FREQUENCY_MONTHS%TYPE,
     p_description IN PAYMENT_FREQUENCIES.DESCRIPTION%TYPE
 ) IS
+    -- variables
     v_id NUMBER;
     v_exists NUMBER := 0;
     v_table_name TAB_ID.TABLE_NAME%TYPE := 'PAYMENT_FREQUENCIES';
 BEGIN
     -- Ensure description is provided
-    IF p_description IS NULL THEN
-        RAISE_APPLICATION_ERROR(-20001, 'Payment frequency description cannot be NULL');
+    IF p_description is null OR p_frequency is null THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Payment frequency cannot be NULL');
     END IF;
 
     -- Check if the payment frequency already exists
@@ -22,8 +25,8 @@ BEGIN
         v_id := FC_ID_TABLE(v_table_name);
 
         -- Insert new payment frequency
-        INSERT INTO PAYMENT_FREQUENCIES (FREQUENCY_ID, DESCRIPTION)
-        VALUES (v_id, UPPER(p_description));
+        INSERT INTO PAYMENT_FREQUENCIES (FREQUENCY_ID, FREQUENCY_MONTHS, DESCRIPTION)
+        VALUES (v_id, p_frequency, p_description);
 
         COMMIT;
         DBMS_OUTPUT.PUT_LINE('Payment frequency inserted successfully');

@@ -1,5 +1,6 @@
 -- >> Procedure to insert a customer << --
 CREATE OR REPLACE PROCEDURE INSERT_CUSTOMER (
+    -- parameters
     p_firstname  IN CUSTOMERS.CUSTOMER_FIRSTNAME%TYPE,
     p_lastname  IN CUSTOMERS.CUSTOMER_LASTNAME%TYPE,
     p_birthday IN CUSTOMERS.DATE_OF_BIRTH%TYPE,
@@ -12,6 +13,7 @@ CREATE OR REPLACE PROCEDURE INSERT_CUSTOMER (
     p_marital_status_id IN CUSTOMERS.MARITAL_STATUS_ID%TYPE,
     p_gender_id IN CUSTOMERS.GENDER_ID%TYPE
 ) IS
+    -- variables
     v_id NUMBER;
     v_exists NUMBER := 0;
     v_table_name TAB_ID.TABLE_NAME%TYPE := 'CUSTOMERS';
@@ -47,7 +49,7 @@ BEGIN
         COMMIT;
         DBMS_OUTPUT.PUT_LINE('Customer inserted successfully');
     ELSE
-        RAISE_APPLICATION_ERROR(-20002, 'The customer already exists');
+        RAISE_APPLICATION_ERROR(-20002, 'The customer email already exists');
     END IF;
 EXCEPTION
     WHEN OTHERS THEN

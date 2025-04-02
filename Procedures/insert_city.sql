@@ -1,8 +1,10 @@
 -- >> Procedure to create a city << --
 CREATE OR REPLACE PROCEDURE INSERT_CITY (
+    -- parameters
     p_city_name  IN CITIES.CITY_NAME%TYPE,
     p_province_id  IN CITIES.PROVINCE_ID%TYPE
 ) IS
+    -- variables
     v_id NUMBER;
     v_exists NUMBER := 0;
     v_table_name TAB_ID.TABLE_NAME%TYPE := 'CITIES';

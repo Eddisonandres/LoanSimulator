@@ -1,8 +1,10 @@
 -- >> Procedure to insert the term months to the loans << --
 CREATE OR REPLACE PROCEDURE INSERT_TERM_MONTHS (
+    -- parameters
     p_term_length IN TERM_MONTHS.TERM_LENGTH%TYPE,
     p_description IN TERM_MONTHS.DESCRIPTION%TYPE DEFAULT NULL
 ) IS
+    -- variables
     v_id NUMBER;
     v_exists NUMBER := 0;
     v_table_name TAB_ID.TABLE_NAME%TYPE := 'TERM_MONTHS';

@@ -1,7 +1,9 @@
 -- >> Procedure to insert a Product << --
 CREATE OR REPLACE PROCEDURE INSERT_PRODUCT (
+    -- parameters
     p_product_name IN PRODUCTS.PRODUCT_NAME%TYPE
 ) IS
+    -- variables
     v_id NUMBER;
     v_exists NUMBER := 0;
     v_table_name TAB_ID.TABLE_NAME%TYPE := 'PRODUCTS';

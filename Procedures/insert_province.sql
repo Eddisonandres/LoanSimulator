@@ -1,8 +1,10 @@
 -- >> Procedure to create a province << --
 CREATE OR REPLACE PROCEDURE INSERT_PROVINCE (
+    -- parameters
     p_province_name  IN PROVINCES.PROVINCE_NAME%TYPE,
     p_country_id  IN PROVINCES.PROVINCE_ID%TYPE
 ) IS
+    -- variables
     v_id NUMBER;
     v_exists NUMBER := 0;
     v_table_name TAB_ID.TABLE_NAME%TYPE := 'PROVINCES';

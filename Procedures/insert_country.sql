@@ -1,7 +1,9 @@
 -- >> Procedure to create a country << --
 CREATE OR REPLACE PROCEDURE INSERT_COUNTRY (
+    -- parameters
     p_country_name  IN COUNTRIES.COUNTRY_NAME%TYPE
 ) IS
+    -- variables
     v_id NUMBER;
     v_exists NUMBER := 0;
     v_table_name TAB_ID.TABLE_NAME%TYPE := 'COUNTRIES';

@@ -1,10 +1,12 @@
 -- >> Procedure to insert a rate to the loans << --
 CREATE OR REPLACE PROCEDURE INSERT_PRODUCT_INTEREST_RATE (
+    -- parameters
     p_product_id IN PRODUCT_INTEREST_RATES.PRODUCT_ID%TYPE,
     p_term_id IN PRODUCT_INTEREST_RATES.TERM_ID%TYPE,
     p_interest_rate IN PRODUCT_INTEREST_RATES.INTEREST_RATE%TYPE,
     p_date_effective IN PRODUCT_INTEREST_RATES.DATE_EFFECTIVE%TYPE
 ) IS
+    -- variables
     v_id NUMBER;
     v_exists NUMBER := 0;
     v_table_name TAB_ID.TABLE_NAME%TYPE := 'PRODUCT_INTEREST_RATES';
