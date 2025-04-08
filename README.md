@@ -33,6 +33,7 @@ The relational database model is designed to ensure all tables are properly rela
 
 ### **model/**
 - `createTables.sql`: Script to create all necessary tables in the database.
+- `InsertData.sql`: Script to insert the data to the main tables.
 
 ### **procedures/**
 - `insert_city.sql`: Procedure to insert cities.
@@ -63,4 +64,4 @@ Run the scripts in the given order to set up the database and populate it with d
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/loan-management.git
+   git clone https://github.com/Eddisonandres/LoanSimulator.git
