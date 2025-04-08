@@ -168,7 +168,7 @@ CREATE table APPROVED_LOANS (
     APPROVED_AMOUNT NUMBER(10,2) NOT NULL,  -- The approved loan amount
     START_DATE DATE NOT NULL,  -- Start date for the loan
     END_DATE DATE NOT NULL,  -- End date for the loan
-    APPLICATION_STATUS CHAR(2) DEFAULT 'GA' NOT NULL,  -- Status of the loan application, linked to STATUS_TAB
+    APPLICATION_STATUS CHAR(2) DEFAULT 'LA' NOT NULL,  -- Status of the loan application, linked to STATUS_TAB
     OBSERVATIONS VARCHAR2(250),  -- Optional observations about the approved loan
     CONSTRAINT PK_APPROVED_LOANS PRIMARY KEY (LOAN_ID),  -- Primary key for the approved loans table
     FOREIGN KEY (APPLICATION_ID) REFERENCES LOAN_APPLICATION(APPLICATION_ID),  -- Foreign key referencing the loan application

@@ -24,6 +24,7 @@ BEGIN
         if v_count > 0 then
             RAISE v_status_exists;
         else
+            -- if the status does not exist intert it
             insert into STATUS_TAB (STATUS_ID, STATUS_TYPE, STATUS_NAME) 
                 values (UPPER(p_status_id), UPPER(P_status_type), UPPER(P_status_name));
             commit;

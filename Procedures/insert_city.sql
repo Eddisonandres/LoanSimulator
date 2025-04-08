@@ -22,12 +22,12 @@ BEGIN
 
     -- it is inserted if does not exist
     IF v_exists = 0 THEN
+        -- update the id and get it
         UPDATE_TAB_ID(v_table_name);
         v_id := FC_ID_TABLE(v_table_name);
-
+        -- insert the city
         INSERT INTO CITIES (CITY_ID, CITY_NAME, PROVINCE_ID) 
         VALUES (v_id, UPPER(p_city_name), p_province_id);
-
         COMMIT;
         DBMS_OUTPUT.PUT_LINE('City inserted successfully');
     ELSE

@@ -34,9 +34,9 @@ BEGIN
     ) THEN 1 ELSE 0 END INTO v_exists FROM DUAL;
 
     IF v_exists = 0 THEN
+        -- update the id and get it
         UPDATE_TAB_ID(v_table_name);
         v_id := FC_ID_TABLE(v_table_name);
-
         -- Insert new customer record
         INSERT INTO CUSTOMERS (CUSTOMER_ID, CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME,
             DATE_OF_BIRTH, RESIDENCE_CITY_ID, EMAIL, PHONE_NUMBER, ADDRESS,
